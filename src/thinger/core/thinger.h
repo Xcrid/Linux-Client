@@ -27,6 +27,7 @@
 #include "pson.h"
 #include "json.hpp"
 #include "json_encoder.hpp"
+#include "json_decoder.hpp"
 #include "thinger_map.hpp"
 #include "thinger_resource.hpp"
 #include "thinger_message.hpp"
