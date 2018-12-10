@@ -22,20 +22,47 @@
 // THE SOFTWARE.
 
 #include "thinger/thinger.h"
-
+#include <filesystem>
+#include <vector>
+#include <iostream>
+#include <sstream>
+#include <string>
+using namespace protoson;
+dynamic_memory_allocator alloc;
+memory_allocator& protoson::pool = alloc;
 #define USER_ID             "YOUR_USER_ID"
 #define DEVICE_ID           "YOUR_DEVICE_ID"
 #define DEVICE_CREDENTIAL   "YOUR_DEVICE_CREDENTIAL"
-
-int main(int argc, char *argv[])
+#define Wifi_ssid
+#define Wifi_password
+thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
+void setup()
 {
-    thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
+    thing.add_wifi(WiFi_ssid, WiFi_password);
+    
 
     // define thing resources here. i.e, this is a sum example
-    thing["sum"] = [](pson& in, pson& out){
+    thing["donnees"] = [](pson& out){
         out["result"] = (int) in["value1"] + (int) in["value2"];
     };
+void loop() {
+    thing.handle();
+    vector<string> tableau;
+    vector<nlohmann::json> jsonArray;
+    std::stringstream ss;
+    std::string path = "/path/to/directory";
+    for (auto & p : std::filesystem::directory_iterator(path))
+    {tableau.push_back(p);}
+    for (int i=0; i<tableau.size();i++)
+    { ss << path << tableau[i] ;
+    std::ifstream my_file(ss.c_str());
+    nlohmann::json j << my_file;
+    std::remove(ss.c_str());
+    jsonArray.push_back(j);}
+    
+    
 
-    thing.start();
-    return 0;
+
+
+   
 }
