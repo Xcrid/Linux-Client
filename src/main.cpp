@@ -31,11 +31,9 @@
 #include <unistd.h>
 using namespace protoson;
 using namespace std;
-#define USER_ID             "YOUR_USER_ID"
-#define DEVICE_ID           "YOUR_DEVICE_ID"
-#define DEVICE_CREDENTIAL   "YOUR_DEVICE_CREDENTIAL"
-#define Wifi_ssid
-#define Wifi_password
+#define USER_ID             amlen
+#define DEVICE_ID           test00
+#define DEVICE_CREDENTIAL   111111
 
 
      nlohman::json json;
