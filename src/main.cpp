@@ -29,31 +29,33 @@
 #include <fstream>
 #include <unistd.h>
 #include <stdio.h>
-#include <time.h>
+#include <ctime>
 using namespace protoson;
 using namespace std;
+using namespace nlohmann;
 #define USER_ID            "amlen"
 #define DEVICE_ID           "test00"
 #define DEVICE_CREDENTIAL   "111111"
- nlohman::json j;
+ json j;
 thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
 
 int main(int argc, char *argv[])
   {time_t storage = time(NULL);
+
     while(true){
-    thing.handle();
-    time_t current = time(NULL);
-    string path = "/";
-    ifstream my_file(path.c_str());
-    j << my_file;
-	if (current-storage>3600) {
-    thing.stream(thing["donnees"]);
-    strorage = time(NULL);}
+
+		thing.handle();
+		time_t current = time(NULL);
+		ifstream my_file("/",ifstream::in);
+		j << my_file;
+		if (current-storage>3600) {
+			thing.stream(thing["donnees"]);
+			storage = time(NULL);}
     
-     thing["donnees"] >> [] (pson &out) { 
-              out["nbrClients"]=  (const char*) j["nbrClient"];
+     thing["donnees"] = [](pson& in, pson& out) {
+              out["nbrClients"]=  (int) j["nbrClients"];
               out["avPrice"]=  (double) j["avPrice"];
-                }(); 
+                }; 
 
 return 0;
 
