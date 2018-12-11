@@ -22,50 +22,38 @@
 // THE SOFTWARE.
 
 #include "thinger/thinger.h"
-#include <filesystem>
 #include <vector>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <fstream>
 #include <unistd.h>
+#include <stdio.h>
+#include <time.h>
 using namespace protoson;
 using namespace std;
-#define USER_ID             amlen
-#define DEVICE_ID           test00
-#define DEVICE_CREDENTIAL   111111
-
-
-     nlohman::json json;
-thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL)
-
+#define USER_ID            "amlen"
+#define DEVICE_ID           "test00"
+#define DEVICE_CREDENTIAL   "111111"
+ nlohman::json j;
+thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
 
 int main(int argc, char *argv[])
-{
+  {time_t storage = time(NULL);
     while(true){
-    
     thing.handle();
-    usleep(30000);
-    vector<string> tableau;
-    stringstream ss;
-    string path = "/path/to/directory";
-    for (auto & p : filesystem::directory_iterator(path))
-    { tableau.push_back(p);}
-    for (int i=0;i<tableau.size();i++){
-        ss << path << tableau[i] ;
-    ifstream my_file(ss.c_str());
-    json << my_file;
-    remove(ss.c_str());
-  //nlohmann::to_pson(j, value);
-    //psonArray.push_back(value);
-    //jsonArray.push_back(j);}
-    thing.stream(thing["donnees"]);}
-     thing["donnees"] >> [] (pson &out) { 
-              out["nom"]=  (const char*) json[i]["string"];
-              out[""]=  hhhhhh;
-                }();
+    time_t current = time(NULL);
+    string path = "/";
+    ifstream my_file(path.c_str());
+    j << my_file;
+	if (current-storage>3600) {
+    thing.stream(thing["donnees"]);
+    strorage = time(NULL);}
     
-    jsonArray.clear();}
+     thing["donnees"] >> [] (pson &out) { 
+              out["nbrClients"]=  (const char*) j["nbrClient"];
+              out["avPrice"]=  (double) j["avPrice"];
+                }(); 
 
 return 0;
 
