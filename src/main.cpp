@@ -46,11 +46,16 @@ int main(int argc, char *argv[])
 
 		thing.handle();
 		time_t current = time(NULL);
-		ifstream my_file("/",ifstream::in);
-		j << my_file;
+		ifstream my_file("test");
+		j = json::parse(my_file);
 		if (current-storage>3600) {
 			thing.stream(thing["donnees"]);
-			storage = time(NULL);}
+			storage = time(NULL);
+			j["nbrClients"] = 0;
+			j["avPrice"] = 0;
+			ofstream file("test");
+			file << j;
+		}
     
      thing["donnees"] = [](pson& in, pson& out) {
               out["nbrClients"]=  (int) j["nbrClients"];
