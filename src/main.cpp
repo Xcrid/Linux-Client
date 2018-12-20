@@ -46,22 +46,23 @@ int main(int argc, char *argv[])
 
 		thing.handle();
 		time_t current = time(NULL);
-		ifstream my_file("test");
-		j = json::parse(my_file);
-		if (current-storage>3600) {
+		if (current-storage>60) {
+			ifstream my_file("/home/pi/Documents/dataToSend.json");
+			j = json::parse(my_file);
 			thing.stream(thing["donnees"]);
 			storage = time(NULL);
 			j["nbrClients"] = 0;
-			j["avPrice"] = 0;
-			ofstream file("test");
+			j["avPrice"] = 0.0;
+			ofstream file("/home/pi/Documents/dataToSend.json");
 			file << j;
+			file.close();
 		}
     
      thing["donnees"] = [](pson& in, pson& out) {
               out["nbrClients"]=  (int) j["nbrClients"];
               out["avPrice"]=  (double) j["avPrice"];
                 }; 
-
+    }
 return 0;
 
    
