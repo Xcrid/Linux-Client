@@ -33,9 +33,9 @@
 using namespace protoson;
 using namespace std;
 using namespace nlohmann;
-#define USER_ID            "amlen"
-#define DEVICE_ID           "test00"
-#define DEVICE_CREDENTIAL   "111111"
+#define USER_ID            "xcrid"
+#define DEVICE_ID           "1"
+#define DEVICE_CREDENTIAL   "xcrid0!"
  json j;
 thinger_device thing(USER_ID, DEVICE_ID, DEVICE_CREDENTIAL);
 
@@ -46,21 +46,19 @@ int main(int argc, char *argv[])
 
 		thing.handle();
 		time_t current = time(NULL);
-		if (current-storage>60) {
+		if (current-storage>3600) {
 			ifstream my_file("/home/pi/Documents/dataToSend.json");
 			j = json::parse(my_file);
-			thing.stream(thing["donnees"]);
+			thing.stream(thing["lumiere"]);
 			storage = time(NULL);
 			j["nbrClients"] = 0;
-			j["avPrice"] = 0.0;
 			ofstream file("/home/pi/Documents/dataToSend.json");
 			file << j;
 			file.close();
 		}
     
-     thing["donnees"] = [](pson& in, pson& out) {
+     thing["lumiere"] = [](pson& in, pson& out) {
               out["nbrClients"]=  (int) j["nbrClients"];
-              out["avPrice"]=  (double) j["avPrice"];
                 }; 
     }
 return 0;
